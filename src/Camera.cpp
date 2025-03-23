@@ -1,4 +1,4 @@
-#include"Camera.h"
+#include"Headers/Camera.h"
 
 Camera::Camera(int width, int height, float fov, glm::vec3 position)
 {

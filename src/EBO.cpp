@@ -1,4 +1,4 @@
-#include "EBO.h"
+#include "Headers/EBO.h"
 
 EBO::EBO(GLuint* indices, GLsizeiptr size)
 {

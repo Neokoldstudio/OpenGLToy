@@ -6,12 +6,12 @@
 #include<glm\gtc\matrix_transform.hpp>
 #include<glm\gtc\type_ptr.hpp>
 
-#include"shaderClass.h"
-#include"VBO.h"
-#include"EBO.h"
-#include"VAO.h"
-#include"Texture.h"
-#include"Camera.h"
+#include"Headers/shaderClass.h"
+#include"Headers/VBO.h"
+#include"Headers/EBO.h"
+#include"Headers/VAO.h"
+#include"Headers/Texture.h"
+#include"Headers/Camera.h"
 
 int main() {
 
