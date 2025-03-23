@@ -19,7 +19,7 @@ int main() {
 	{
 //POSITION	  X					Y			         Z   |COLOR	R      G      B		| U     V coordinates 
 			-0.5f,            -0.5f,               0.0f,        1.0f, 0.0f, 0.0f,    0.0f, 0.0f, 
-			-0.5f,             0.5f,               0.0f,        0.0f, 1.0f, 0.0f,    0.0f, 1.0f,
+			-0.5f,             0.5f,               1.0f,        0.0f, 1.0f, 0.0f,    0.0f, 1.0f,
 			 0.5f,             0.5f,               0.0f,        0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
 		     0.5f,            -0.5f,               0.0f,        1.0f, 1.0f, 1.0f,    1.0f, 0.0f
 	};
@@ -54,7 +54,7 @@ int main() {
 
 	glViewport(0, 0, width, height);//creating a viewport
 
-	Shader shaderProgram("default.vert", "default.frag");//initializing and setup of the vertex+fragment shader couple
+    Shader shaderProgram("./src/Shaders/default.vert", "./src/Shaders/default.frag");//initializing and setup of the vertex+fragment shader couple
 
 	//------------------VERTEX ARRAY, BUFFER AND ELEMENT ID SET UP---------------//
 	VAO VAO1;
@@ -74,7 +74,7 @@ int main() {
 	//---------------------------------------------------------------------------//
 
 	//Texture
-	Texture image("perlin.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Texture image("./src/perlin.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	image.texUnit(shaderProgram, "text0", 0); //pass the texture as a uniform to the shader;
 
 	glEnable(GL_DEPTH_TEST);
