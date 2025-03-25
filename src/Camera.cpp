@@ -8,7 +8,7 @@ Camera::Camera(int width, int height, float fov, glm::vec3 position)
 	Camera::Position = position;
 }
 
-void Camera::Matrix(float nearPlane, float farPlane, Shader& shader, const char* uniform)
+void Camera::UpdateMatrix(float nearPlane, float farPlane)
 {
 	glm::mat4 view = glm::mat4(1.0);
 	glm::mat4  projection = glm::mat4(1.0);
@@ -16,7 +16,12 @@ void Camera::Matrix(float nearPlane, float farPlane, Shader& shader, const char*
 	view = glm::lookAt(Position, Position + LookAt, Up);
 	projection = glm::perspective(glm::radians(fov), (float)(width / height), nearPlane, farPlane);
 
-	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(projection * view));
+	cameraMatrix = projection * view;
+}
+
+void Camera::Matrix(Shader& shader, const char* uniform)
+{
+	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(cameraMatrix));
 }
 
 void Camera::Inputs(GLFWwindow* window)
@@ -48,13 +53,20 @@ void Camera::Inputs(GLFWwindow* window)
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
-		speed = 0.4f;
+		speed = 0.03f;
 	}
 	else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
 	{
-		speed = 0.1f;
+		speed = 0.01f;
 	}
-
+	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		fov -= 0.1f;
+	}
+	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		fov += 0.1f;
+	}
 
 	// Handles mouse inputs
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
@@ -102,4 +114,13 @@ void Camera::Inputs(GLFWwindow* window)
 		// Makes sure the next time the camera looks around it doesn't jump
 		firstClick = true;
 	}
+}
+
+void Camera::Update(GLFWwindow* window, Shader& shader)
+{
+	glfwGetWindowSize(window, &width, &height);
+	glViewport(0, 0, width, height);
+	Inputs(window);
+	UpdateMatrix(0.1f, 100.0f);
+	Matrix(shader, "camMatrix");
 }
